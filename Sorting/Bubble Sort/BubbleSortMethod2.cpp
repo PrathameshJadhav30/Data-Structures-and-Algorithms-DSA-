@@ -45,7 +45,7 @@ void display(int arr[], int size)
 //Main function to run the program.
 int main()
 {
-    int array[] = {10, 20, 30, 40, 50};
+    int array[] = {10, 20, 60, 40, 50};
     int size = sizeof(array)/sizeof(array[0]);
     
     cout<<"Before bubble sort: \n";
