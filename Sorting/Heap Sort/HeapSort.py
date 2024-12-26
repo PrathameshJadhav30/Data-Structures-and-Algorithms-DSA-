@@ -1,63 +1,48 @@
-# Function to heapify a subtree rooted at index 'i' in the array
+# Function to heapify a subtree rooted at index i
 def heapify(arr, n, i):
-    """
-    Ensures the subtree rooted at index 'i' satisfies the max-heap property.
+    largest = i  # Initialize the largest as root
+    l = 2 * i + 1  # Left child index
+    r = 2 * i + 2  # Right child index
 
-    Args:
-        arr (list): Array representation of the heap.
-        n (int): Size of the heap.
-        i (int): Index of the root of the subtree.
+    # If left child is larger than root
+    if l < n and arr[l] > arr[largest]:
+        largest = l
 
-    Returns:
-        None
-    """
-    largest = i  # Initialize the largest element as the root
-    left = 2 * i + 1  # Left child index
-    right = 2 * i + 2  # Right child index
+    # If right child is larger than the largest so far
+    if r < n and arr[r] > arr[largest]:
+        largest = r
 
-    # Check if the left child exists and is greater than the root
-    if left < n and arr[left] > arr[largest]:
-        largest = left
-
-    # Check if the right child exists and is greater than the current largest
-    if right < n and arr[right] > arr[largest]:
-        largest = right
-
-    # If the largest is not the root, swap them and heapify the affected subtree
+    # If the largest is not the root
     if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]  # Swap
-        heapify(arr, n, largest)  # Recursively heapify the affected subtree
+        arr[i], arr[largest] = arr[largest], arr[i]  # Swap root with the largest
+
+        # Recursively heapify the affected subtree
+        heapify(arr, n, largest)
 
 # Function to perform Heap Sort
 def heap_sort(arr):
-    """
-    Sorts an array using the Heap Sort algorithm.
+    n = len(arr)
 
-    Args:
-        arr (list): The array to be sorted.
-
-    Returns:
-        None (the array is sorted in place).
-    """
-    n = len(arr)  # Length of the array
-
-    # Step 1: Build a max heap
+    # Build a max heap
     for i in range(n // 2 - 1, -1, -1):
         heapify(arr, n, i)
 
-    # Step 2: Extract elements from the heap one by one
+    # Extract elements from heap one by one
     for i in range(n - 1, 0, -1):
-        arr[0], arr[i] = arr[i], arr[0]  # Swap the root (largest) with the last element
-        heapify(arr, i, 0)  # Reduce the heap size by 1 and heapify the root
+        arr[0], arr[i] = arr[i], arr[0]  # Move current root to the end
+        heapify(arr, i, 0)  # Call max heapify on the reduced heap
 
-# Example usage of Heap Sort
-if __name__ == "__main__":
-    # Input array
-    arr = [12, 11, 13, 5, 6, 7]
+# Function to display the elements of an array
+def display(arr):
+    print("\t".join(map(str, arr)))
 
-    print("Original array:", arr)
-    
-    # Sort the array
-    heap_sort(arr)
+# Input array
+arr = [1, 14, 3, 7, 0, 56]
 
-    print("Sorted array:", arr)
+print("Unsorted array:")
+display(arr)  # Display unsorted array
+
+heap_sort(arr)  # Sort the array
+
+print("Sorted array:")
+display(arr)  # Display sorted array
